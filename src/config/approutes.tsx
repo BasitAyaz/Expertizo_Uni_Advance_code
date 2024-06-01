@@ -4,6 +4,7 @@ import APIHandeling from "../pages/API HandelingScreen"
 import NotFound from "../pages/notfound"
 import Notes from "../pages/notes"
 import Login from "../pages/login"
+import Users from "../pages/users"
 
 export default function AppRoute() {
     return <>
@@ -19,6 +20,7 @@ export default function AppRoute() {
                 <Route path="apiscreen" element={<APIHandeling />} />
                 <Route path="notes" element={<Notes />} />
                 <Route path="login" element={<Login />} />
+                <Route path="users" element={<Users />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </Router>

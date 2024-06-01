@@ -1,9 +1,10 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { useState } from "react";
-import { sendData } from "../config/firebasemethods";
+import { useEffect, useState } from "react";
+import { getData, sendData } from "../config/firebasemethods";
 
 export default function Login() {
     const [model, setModel] = useState<any>({})
+    const [count, setCount] = useState<any>(0)
 
     const loginUser = () => {
         sendData('users', model)
@@ -14,8 +15,20 @@ export default function Login() {
             })
     }
 
+    const get = () => {
+        getData('users')
+    }
+
+    useEffect(() => {
+        get()
+    }, [])
+
+
     return <>
         <Box sx={{ height: '100vh' }} className='bg-light d-flex justify-content-center align-items-center'>
+            <Button onClick={() => {
+                setCount(count + 1)
+            }}>Change Count</Button>
             <Box>
                 <Box className='p-3'>
                     <Typography className="fs-2">Login</Typography>

@@ -1,31 +1,25 @@
 import app from "./firebaseconfig";
-import { getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set, push, onValue } from "firebase/database";
 
 const db = getDatabase(app)
 
 export const sendData = (nodeName: string, obj: any) => {
-    const reference = ref(db, nodeName)
-    return set(reference, obj)
+
+    const reference = ref(db, `${nodeName}/`)
+    return push(reference, obj)
 }
 
+export const getData = (nodeName: string) => {
+    return new Promise((resolve, reject) => {
+        const reference = ref(db, `${nodeName}`)
+        onValue(reference, (data) => {
+            if (data.exists()) {
+                let arr = Object.values(data.val())
+                resolve(arr)
+            } else {
+                reject("No Data Found")
+            }
+        })
+    })
 
-// let database = {
-//     users: {
-//         asda43lkj53lkj45k34: {
-//             name: 'ABC',
-//             age: 18,
-//         },
-//         oi4u534u5oi3u45oi3j: {},
-//         klk35o43iu53o4u53u4: {},
-//     },
-//     products: {
-//         asda43lkj53lkj45k34: {},
-//         oi4u534u5oi3u45oi3j: {},
-//         klk35o43iu53o4u53u4: {},
-//     },
-//     orders: {
-//         asda43lkj53lkj45k34: {},
-//         oi4u534u5oi3u45oi3j: {},
-//         klk35o43iu53o4u53u4: {},
-//     },
-// }
+}
